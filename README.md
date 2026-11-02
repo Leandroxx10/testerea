@@ -6,12 +6,18 @@ Um aplicativo independente para Windows, criado do zero, com interface própria 
 
 ## Baixar
 
-- [Código-fonte pronto para iniciar](downloads/MemoriaStudio-Fonte.zip): extraia em uma pasta própria e abra `Iniciar.cmd`. Requer Python 3.12 x64; o iniciador instala as dependências em uma `.venv` dentro da própria pasta.
-- O fluxo **Memoria Studio Windows** em [Actions](https://github.com/Leandroxx10/testerea/actions) testa a API nativa e gera o executável. Quando esse fluxo concluir com sucesso, o pacote compilado estará em [Releases](https://github.com/Leandroxx10/testerea/releases). A existência do código não comprova uma compilação bem-sucedida.
+**[Baixar Memória Studio para Windows](https://github.com/Leandroxx10/testerea/releases/download/memoria-studio-1/MemoriaStudio-Windows.zip)**
+
+Extraia o ZIP inteiro em uma pasta própria e abra `MemoriaStudio.exe`. O executável não exige Python instalado nem usa arquivos do Cheat Engine. Mantenha a pasta `_internal` ao lado dele.
 
 ```bat
-curl.exe --fail -L "https://raw.githubusercontent.com/Leandroxx10/testerea/main/downloads/MemoriaStudio-Fonte.zip" -o "%USERPROFILE%\Downloads\MemoriaStudio-Fonte.zip"
+curl.exe --fail -L "https://github.com/Leandroxx10/testerea/releases/download/memoria-studio-1/MemoriaStudio-Windows.zip" -o "%USERPROFILE%\Downloads\MemoriaStudio-Windows.zip"
 ```
+
+- [Prévia real da interface](docs/interface.png).
+- [Código-fonte pronto para iniciar](downloads/MemoriaStudio-Fonte.zip): alternativa com Python 3.12 x64 e `Iniciar.cmd`.
+- [Compilação e testes do Windows](https://github.com/Leandroxx10/testerea/actions/runs/41545842189).
+- [SHA-256 do executável empacotado](downloads/MemoriaStudio-Windows.sha256).
 
 A implementação e os limites estão descritos no [guia do aplicativo](standalone/LEIA-ME.md).
 
@@ -32,4 +38,4 @@ Os pacotes antigos foram retirados dos downloads. O código histórico está em 
 
 Busca numérica, refinamento, cancelamento, endereços salvos, edição/congelamento, projetos próprios, leitura hexadecimal, desmontagem x64 e comandos de voz pt-BR foram implementados. A voz depende do microfone e do reconhecedor local do Windows. Não há suporte a `.CT`, depurador, drivers, Auto Assembler ou scripts nesta primeira versão independente.
 
-A interface foi renderizada e inspecionada no Linux. Os testes locais de busca e interface passaram; o teste da API nativa é exclusivo do Windows e roda no fluxo de compilação. Verifique o resultado desse fluxo antes de considerar o executável validado. O microfone precisa ser testado no computador de destino.
+A interface foi renderizada e inspecionada no Linux. Os testes de busca e interface passaram no Linux e no fluxo Windows. O teste nativo de leitura/escrita, listagem de processos e regiões de memória passou no Windows antes da compilação. O pacote publicado foi baixado e sua integridade ZIP foi conferida. O microfone ainda precisa ser testado no computador de destino.
