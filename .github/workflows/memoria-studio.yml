@@ -1,0 +1,45 @@
+name: Memoria Studio Windows
+on:
+  push:
+    branches: [main]
+    paths: ['standalone/**', '.github/workflows/memoria-studio.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: x64
+          cache: pip
+          cache-dependency-path: standalone/requirements.txt
+      - name: Install dependencies
+        run: python -m pip install -r standalone/requirements.txt pyinstaller==6.12.0
+      - name: Test UI, scanner and native Windows API
+        env:
+          PYTHONPATH: standalone
+          QT_QPA_PLATFORM: offscreen
+        run: python -m unittest discover -s standalone/tests -v
+      - name: Build independent Windows app
+        working-directory: standalone
+        run: python -m PyInstaller --noconfirm --clean --windowed --onedir --name MemoriaStudio --collect-all capstone --add-data "memoria_studio/voice.ps1;memoria_studio" launch.py
+      - name: Package
+        shell: pwsh
+        run: |
+          Copy-Item standalone/LEIA-ME.md standalone/dist/MemoriaStudio/LEIA-ME.md
+          Compress-Archive -Path standalone/dist/MemoriaStudio -DestinationPath MemoriaStudio-Windows.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MemoriaStudio-Windows
+          path: MemoriaStudio-Windows.zip
+      - name: Publish executable package
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = "memoria-studio-$env:GITHUB_RUN_NUMBER"
+          gh release create $tag MemoriaStudio-Windows.zip --title "Memória Studio $env:GITHUB_RUN_NUMBER" --notes "Aplicativo independente. Testes de interface, busca e API nativa do Windows executados antes da compilação. Voz requer reconhecedor pt-BR instalado."
