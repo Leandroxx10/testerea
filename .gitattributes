@@ -1,0 +1,2 @@
+# Raw GitHub downloads of CMD files must retain Windows line endings.
+*.cmd -text whitespace=cr-at-eol

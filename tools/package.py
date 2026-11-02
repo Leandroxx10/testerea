@@ -21,3 +21,6 @@ with ZipFile(output) as archive:
 digest = hashlib.sha256(output.read_bytes()).hexdigest()
 (root / 'downloads/SHA256SUMS.txt').write_text(digest + '  CE-Modern-Windows.zip\n')
 print(str(output), output.stat().st_size, 'bytes', digest)
+
+template = (root / 'tools/downloader.cmd.in').read_text()
+(root / 'downloads/Baixar-CE-Modern.cmd').write_bytes(template.replace('@@SHA256@@', digest).replace('\n', '\r\n').encode('utf-8'))

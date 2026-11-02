@@ -4,22 +4,28 @@ Interface guiada para a instalação Windows do Cheat Engine. O painel usa o mec
 
 ## Download pelo CMD
 
-Depois de publicado neste repositório:
+Baixe o assistente atualizado pelo CMD **ja aberto**:
+
+```bat
+curl.exe --fail -L "https://raw.githubusercontent.com/Leandroxx10/testerea/main/downloads/Baixar-CE-Modern.cmd" -o "%USERPROFILE%\Downloads\Baixar-CE-Modern.cmd"
+call "%USERPROFILE%\Downloads\Baixar-CE-Modern.cmd"
+```
+
+Ou baixe [Baixar-CE-Modern.cmd](downloads/Baixar-CE-Modern.cmd) e execute por duplo clique. O assistente baixa o ZIP, verifica o SHA-256, extrai todos os arquivos e chama o instalador. A janela permanece aberta para mostrar erros; nao e necessario desativar verificacao TLS, checksum ou politica do PowerShell.
+
+Se o destino for `C:\Program Files\Cheat Engine`, execute o assistente como administrador. A instalacao padrao e detectada pelo caminho; se nao existir, o instalador pede a pasta correta. Pode ser, por exemplo, `C:\Program Files\Cheat Engine 7.5`.
+
+**Instalar.cmd nao faz download:** ele instala os arquivos que ja estao extraidos ao seu lado. Nao execute o instalador diretamente de dentro do ZIP nem copie apenas esse arquivo. Feche o Cheat Engine antes da instalacao.
+
+Logs: `%USERPROFILE%\Downloads\CE-Modern-Setup\download.log` para download, checksum e extracao; `%LOCALAPPDATA%\CE-Modern\instalacao.log` para copias e permissoes. Se houver erro, envie o texto mostrado ou o log correspondente.
+
+Para baixar somente o ZIP:
 
 ```bat
 curl.exe --fail -L "https://raw.githubusercontent.com/Leandroxx10/testerea/main/downloads/CE-Modern-Windows.zip" -o "%USERPROFILE%\Downloads\CE-Modern-Windows.zip"
-powershell -NoProfile -Command "Expand-Archive -LiteralPath ($env:USERPROFILE+'\Downloads\CE-Modern-Windows.zip') -DestinationPath ($env:USERPROFILE+'\Downloads\CE-Modern') -Force"
 ```
 
-O comando baixa e extrai; ele não executa automaticamente o pacote. Na pasta extraída `CE-Modern`, execute **Instalar.cmd** como administrador se o programa estiver em Program Files. O caminho padrão é `C:\Program Files\Cheat Engine`. Para outro caminho:
-
-```bat
-Instalar.cmd "D:\Aplicativos\Cheat Engine"
-```
-
-Feche o Cheat Engine antes de instalar. O instalador atualiza apenas os arquivos da extensão, preserva os demais scripts e cria uma cópia da versão anterior quando encontra `ce_modern.lua`. Reabra o programa após a cópia.
-
-Também é possível copiar manualmente o conteúdo de `autorun` para a pasta `autorun` do Cheat Engine. Mantenha a subpasta `ce_modern`.
+Extraia tudo e execute `CE-Modern\Instalar.cmd`. O instalador atualiza apenas os quatro arquivos da extensao, preserva outros scripts e faz uma copia da versao anterior. E possivel tambem copiar o conteudo da pasta `autorun` manualmente para a instalacao do Cheat Engine.
 
 ## O que funciona dentro do painel
 
